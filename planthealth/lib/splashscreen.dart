@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'login.dart';
 import 'main.dart';
 
 class splashScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _splashScreenState extends State<splashScreen> {
 
   void _navigateToHome() {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
+        MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
   }
 
   Widget build(BuildContext context) {
