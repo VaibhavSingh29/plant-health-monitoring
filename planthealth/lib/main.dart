@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:planthealth/splashscreen.dart';
 
 void main() {
@@ -78,6 +79,75 @@ class _MyHomePageState extends State<MyHomePage> {
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,
+          ),
+          Center(
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                Text('Plant Name',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'Righteous',
+                    )),
+                Text('Status: Connected',
+                    style: TextStyle(
+                      fontSize: 15,
+                      // fontFamily: 'Righteous',
+                    )),
+                FlatButton(
+                  color: Color(0xffF8DB3B),
+                  splashColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50))),
+                  onPressed: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                    child: Text(
+                      'Remove plant',
+                      style: TextStyle(color: Colors.black87, fontSize: 15),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                CircularPercentIndicator(
+                  animation: true,
+                  animationDuration: 1200,
+                  radius: 80.0,
+                  lineWidth: 7.0,
+                  percent: 0.90,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  center: new Text("90%"),
+                  footer: Text("Moisture"),
+                  progressColor: Colors.green,
+                ),
+                SizedBox(height: 20),
+                CircularPercentIndicator(
+                  animation: true,
+                  animationDuration: 1200,
+                  radius: 80.0,
+                  lineWidth: 7.0,
+                  percent: 0.5,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  center: new Text("50%"),
+                  footer: Text("Temperature"),
+                  progressColor: Colors.yellow[600],
+                ),
+                SizedBox(height: 20),
+                CircularPercentIndicator(
+                  animation: true,
+                  animationDuration: 1200,
+                  radius: 80.0,
+                  lineWidth: 7.0,
+                  percent: 0.3,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  center: new Text("30%"),
+                  footer: Text("Sunlight"),
+                  progressColor: Colors.orange,
+                ),
+              ],
+            ),
           ),
         ],
       ),
