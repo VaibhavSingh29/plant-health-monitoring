@@ -79,46 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
             height: double.infinity,
             fit: BoxFit.cover,
           ),
-          Column(children: [
-            SizedBox(
-              height: 120,
-            ),
-            Center(
-              child: FlatButton(
-                color: Color(0xffF8DB3B),
-                splashColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(60, 10, 60, 10),
-                  child: Text(
-                    'My Plants',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Center(
-              child: FlatButton(
-                color: Color(0xffF8DB3B),
-                splashColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(60, 10, 60, 10),
-                  child: Text(
-                    'New Plant',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-          ]),
         ],
       ),
     ));

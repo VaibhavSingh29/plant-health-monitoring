@@ -15,6 +15,7 @@ class _NewPlantState extends State<NewPlant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         child: Stack(children: [
           Image.asset(
@@ -65,14 +66,13 @@ class _NewPlantState extends State<NewPlant> {
                   },
                   items: <String>[
                     'Select Plant',
-                    'squirrel',
-                    'exchange',
-                    'bubble',
-                    'kittens',
-                    'stranger',
-                    'interest',
-                    'station',
-                    'chance',
+                    'Aloe vera',
+                    'cactus',
+                    'Money plant',
+                    'Rose',
+                    'Tulsi',
+                    'Mint',
+                    'Tomato',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
