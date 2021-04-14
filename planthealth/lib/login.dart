@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Color(0xffF8DB3B),
                     splashColor: Colors.black,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
                     onPressed: () {
                       login_user();
                     },
