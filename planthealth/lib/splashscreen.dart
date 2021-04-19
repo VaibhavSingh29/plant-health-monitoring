@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:planthealth/home.dart';
+import 'home.dart';
 import 'login.dart';
 import 'main.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 class splashScreen extends StatefulWidget {
   @override
   _splashScreenState createState() => _splashScreenState();
@@ -14,9 +15,11 @@ class _splashScreenState extends State<splashScreen> {
   void initState() {
     super.initState();
 
-    _mockcheckForSession().then((status) {
-      if (status) {
-        _navigateToHome();
+    _mockcheckForSession().then((status) async {
+      SharedPreferences prefs= await SharedPreferences.getInstance();
+
+      if (prefs.getString("user_id")==null) {
+        _navigateToLogin();
       } else {
         _navigateToHome();
       }
@@ -29,6 +32,11 @@ class _splashScreenState extends State<splashScreen> {
   }
 
   void _navigateToHome() {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
+  }
+
+  void _navigateToLogin() {
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
   }
