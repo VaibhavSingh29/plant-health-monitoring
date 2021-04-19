@@ -147,7 +147,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       lineWidth: 7.0,
                       percent: humidity_gauge[0].toDouble(),
                       circularStrokeCap: CircularStrokeCap.round,
-                      center: new Text(humidity_gauge[1]),
+                      center: new Text(humidity_gauge[1],
+                                      style:TextStyle(
+                            fontSize: 20
+                        ),
+                         ),
                       footer: Text("Humidity"),
                       progressColor: Colors.blue[600],
                     ),
@@ -172,7 +176,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       lineWidth: 7.0,
                       percent: light_gauge[0].toDouble(),
                       circularStrokeCap: CircularStrokeCap.round,
-                      center: new Text(light_gauge[1]),
+                      center: new Text(light_gauge[1],
+                                      style:TextStyle(
+                            fontSize: 20
+                        ),
+                         ),
                       footer: Text("Sunlight"),
                       progressColor: Colors.yellowAccent,
                     ),
