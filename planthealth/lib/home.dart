@@ -326,7 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
              )
          );
        }
-     else if(time_diff > 19800)
+     else if(time_diff > 19810)
        {
          return Text(
              "Disconnected",
