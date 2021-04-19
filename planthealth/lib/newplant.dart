@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import 'home.dart';
-import 'plant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class NewPlant extends StatefulWidget {
   @override
@@ -9,8 +10,27 @@ class NewPlant extends StatefulWidget {
 }
 
 class _NewPlantState extends State<NewPlant> {
-  String plantName = 'Select Plant';
-  String nickName;
+  String _botanical_name = 'Select Plant';
+  String _nickName='', _pot_id='', _plant_name='';
+
+  void add_plant() async
+  {
+    if(_botanical_name== 'Select Plant' && _pot_id=='' && _plant_name=='')
+      {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please select all fields!")));
+      }
+    else
+      {
+        var url = Uri.parse('https://zlnhbt4ogh.execute-api.us-east-1.amazonaws.com/create_plant');
+        SharedPreferences prefs= await SharedPreferences.getInstance();
+        String _user_id = prefs.getString('user_id');
+        var response= await http.post(url, body: '{"pot_id": "$_pot_id", "user_id": "$_user_id", "botanical_name": "$_botanical_name","nick_name": "$_nickName", "plant_name": "$_plant_name"}');
+
+        print(response.body);
+        Navigator.pop(context);
+
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +68,7 @@ class _NewPlantState extends State<NewPlant> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: DropdownButton<String>(
-                  value: plantName,
+                  value: _botanical_name,
                   // isDense: true,
                   isExpanded: true,
                   icon: const Icon(Icons.arrow_drop_down_rounded),
@@ -61,12 +81,12 @@ class _NewPlantState extends State<NewPlant> {
                   ),
                   onChanged: (String newValue) {
                     setState(() {
-                      plantName = newValue;
+                      _botanical_name = newValue;
                     });
                   },
                   items: <String>[
                     'Select Plant',
-                    'Aloe vera',
+                    'Aloe V',
                     'cactus',
                     'Money plant',
                     'Rose',
@@ -84,18 +104,49 @@ class _NewPlantState extends State<NewPlant> {
               SizedBox(
                 height: 20,
               ),
+              //Plant name
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: TextField(
-                    onChanged: (nickname) => {nickName = nickname},
+                    onChanged: (plant_name) => {_plant_name = plant_name},
                     decoration: InputDecoration(
-                      hintText: 'Name',
+                      hintText: 'Plant name',
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black87),
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black87),
                       ),
+                    )),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              //Pot id
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: TextField(
+
+                    onChanged: (pot_id) => {_pot_id = pot_id},
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Pot id',
+                    )),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              //Nickname
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: TextField(
+                    onChanged: (nickname) => {_nickName = nickname},
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Nickname',
+
                     )),
               ),
               Align(
@@ -108,17 +159,13 @@ class _NewPlantState extends State<NewPlant> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50))),
                     onPressed: () {
-                      Plant plant = Plant(plantName, nickName);
-                      PlantList.addPlant(plant);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                     //Create plant
+                     add_plant();
                     },
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                       child: Text(
-                        'Next',
+                        'Add',
                         style: TextStyle(color: Colors.black87, fontSize: 15),
                       ),
                     ),
