@@ -1,19 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'home.dart';
 import 'login.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+import 'login.dart';
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  // String _user_name,_email, _password, _phone_number;
-  // String userId;
+  String _user_name,_email, _password, _confirm_password;
 
   void signUp() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    var url = Uri.parse('https://zlnhbt4ogh.execute-api.us-east-1.amazonaws.com/create_user');
+
+    if(_password == _confirm_password)
+    {
+      var response= await http.post(url, body: '{"user_email": "$_email", "user_name": "$_user_name" ,"user_password": "$_password"}');
+
+      if(response.statusCode==200)
+      {
+        //Save user id and user name in shared prefs
+        var body= json.decode(response.body);
+        print(body);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.body)));
+        Navigator.push(
+               context, MaterialPageRoute(builder: (context) => LoginPage()));
+        //Go to home screen
+
+      }
+      else
+      {
+        //Prompt user
+        print("Failed");
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.body)));
+
+      }
+    }
+
+    //Navigator.push(
+    //    context, MaterialPageRoute(builder: (context) => HomeScreen()));
   }
 
   @override
@@ -49,7 +78,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                     padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                     child: TextField(
-                      onChanged: (username) => {},
+                      onChanged: (username) => {
+                        _user_name = username
+                      },
                       style: TextStyle(
                         color: Color(0xff020061),
                       ),
@@ -76,7 +107,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: TextField(
-                    onChanged: (email) => {},
+                    onChanged: (email) => {
+                      _email = email
+                    },
                     style: TextStyle(
                       color: Color(0xff020061),
                     ),
@@ -103,7 +136,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: TextField(
-                    onChanged: (pass) => {},
+                    onChanged: (pass) => {
+                      _password = pass
+                    },
                     style: TextStyle(
                       color: Color(0xff020061),
                     ),
@@ -131,7 +166,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                   child: TextField(
-                    onChanged: (phn) => {},
+                    onChanged: (comfirm_password) => {
+                      _confirm_password = comfirm_password
+                    },
                     style: TextStyle(
                       color: Color(0xff020061),
                     ),
@@ -145,7 +182,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xff020061)),
                           borderRadius: BorderRadius.all(Radius.circular(10))),
-                      labelText: 'Phone Number',
+                      labelText: 'Comfirm Password',
                       labelStyle: TextStyle(
                         color: Colors.green,
                       ),
@@ -163,11 +200,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50))),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
-                    },
+                      signUp();
+                      },
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(60, 10, 60, 10),
                       child: Text(
