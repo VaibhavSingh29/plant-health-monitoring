@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'signup.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,10 +11,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String user_name, password;
+  String user_email, password;
+
   void login_user() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
+    var url = Uri.parse('https://zlnhbt4ogh.execute-api.us-east-1.amazonaws.com/login_user');
+    var response= await http.post(url, body: '{"user_email": "$user_email", "user_password": "$password"}');
+
+    if(response.statusCode==200)
+    {
+      //Save user id and user name in shared prefs
+      var body= json.decode(response.body);
+      print(body['user_id']);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString("user_id", body['user_id']);
+      prefs.setString("user_name", body['user_name']);
+      print("Saved to shared prefs!");
+
+     //Go to home screen
+     Navigator.pushReplacement(
+         context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
+    }
+    else
+      {
+        //Prompt user
+        print("Failed");
+        print(response.body);
+
+      }
+   // Navigator.push(
+        //context, MaterialPageRoute(builder: (context) => HomeScreen()));
   }
 
   @override
@@ -48,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
                     child: TextField(
                       onChanged: (userName) {
-                        user_name = userName;
+                        user_email = userName;
                       },
                       style: TextStyle(
                         color: Color(0xff020061),
@@ -56,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                       decoration: InputDecoration(
                           // filled: true,
                           // fillColor: Colors.blueAccent,
-                          labelText: 'username',
+                          labelText: 'email',
                           labelStyle: TextStyle(
                             color: Colors.green,
                           ),
