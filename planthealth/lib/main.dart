@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       lineWidth: 7.0,
                       percent: temperature_gauge[0].toDouble(),
                       circularStrokeCap: CircularStrokeCap.round,
-                      center: new Text(temperature_gauge[1], style:
+                      center: new Text(temperature_gauge[1] + "℃", style:
                         TextStyle(
                           fontSize: 20
                         ),
@@ -147,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       lineWidth: 7.0,
                       percent: humidity_gauge[0].toDouble(),
                       circularStrokeCap: CircularStrokeCap.round,
-                      center: new Text(humidity_gauge[1],
+                      center: new Text(humidity_gauge[1] + "%",
                                       style:TextStyle(
                             fontSize: 20
                         ),
@@ -236,6 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
     int val = int.parse(value);
     print(value);
     print(ideal_values);
+    String post_fix = "";
     var ideal_values_list = ideal_values.split("-");
     int low = int.parse(ideal_values_list[0]);
     int high = int.parse(ideal_values_list[1]);
@@ -254,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
       List gauge_valus=[];
       double percent= (val - low )/ high;
       gauge_valus.add(percent);
-      gauge_valus.add(value.toString());
+      gauge_valus.add(value.toString() + post_fix);
       return gauge_valus;
     }
   }
