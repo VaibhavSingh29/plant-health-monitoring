@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class NewPlant extends StatefulWidget {
   @override
   _NewPlantState createState() => _NewPlantState();
@@ -11,25 +10,26 @@ class NewPlant extends StatefulWidget {
 
 class _NewPlantState extends State<NewPlant> {
   String _botanical_name = 'Select Plant';
-  String _nickName='', _pot_id='', _plant_name='';
+  String _nickName = '', _pot_id = '', _plant_name = '';
 
-  void add_plant() async
-  {
-    if(_botanical_name== 'Select Plant' && _pot_id=='' && _plant_name=='')
-      {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please select all fields!")));
-      }
-    else
-      {
-        var url = Uri.parse('https://zlnhbt4ogh.execute-api.us-east-1.amazonaws.com/create_plant');
-        SharedPreferences prefs= await SharedPreferences.getInstance();
-        String _user_id = prefs.getString('user_id');
-        var response= await http.post(url, body: '{"pot_id": "$_pot_id", "user_id": "$_user_id", "botanical_name": "$_botanical_name","nick_name": "$_nickName", "plant_name": "$_plant_name"}');
+  void add_plant() async {
+    if (_botanical_name == 'Select Plant' &&
+        _pot_id == '' &&
+        _plant_name == '') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Please select all fields!")));
+    } else {
+      var url = Uri.parse(
+          'https://zlnhbt4ogh.execute-api.us-east-1.amazonaws.com/create_plant');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String _user_id = prefs.getString('user_id');
+      var response = await http.post(url,
+          body:
+              '{"pot_id": "$_pot_id", "user_id": "$_user_id", "botanical_name": "$_botanical_name","nick_name": "$_nickName", "plant_name": "$_plant_name"}');
 
-        print(response.body);
-        Navigator.pop(context);
-
-      }
+      print(response.body);
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -57,7 +57,7 @@ class _NewPlantState extends State<NewPlant> {
                 ),
               ),
               SizedBox(height: 20),
-              Text('Add new plant',
+              Text('Add a new plant',
                   style: TextStyle(
                     fontSize: 30,
                     fontFamily: 'Righteous',
@@ -111,6 +111,8 @@ class _NewPlantState extends State<NewPlant> {
                     onChanged: (plant_name) => {_plant_name = plant_name},
                     decoration: InputDecoration(
                       hintText: 'Plant name',
+                      filled: true,
+                      fillColor: Colors.grey[200],
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.black87),
                       ),
@@ -126,12 +128,17 @@ class _NewPlantState extends State<NewPlant> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 child: TextField(
-
                     onChanged: (pot_id) => {_pot_id = pot_id},
                     decoration: InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black87),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black87),
+                      ),
                       filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Pot id',
+                      fillColor: Colors.grey[200],
+                      hintText: 'Pot ID',
                     )),
               ),
               SizedBox(
@@ -144,9 +151,14 @@ class _NewPlantState extends State<NewPlant> {
                     onChanged: (nickname) => {_nickName = nickname},
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white,
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black87),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black87),
+                      ),
+                      fillColor: Colors.grey[200],
                       hintText: 'Nickname',
-
                     )),
               ),
               Align(
@@ -159,8 +171,8 @@ class _NewPlantState extends State<NewPlant> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(50))),
                     onPressed: () {
-                     //Create plant
-                     add_plant();
+                      //Create plant
+                      add_plant();
                     },
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
