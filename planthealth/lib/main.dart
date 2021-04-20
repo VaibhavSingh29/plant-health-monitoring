@@ -243,18 +243,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if(val < low)
     {
-      return [0, "❌"];
+      return [0, value.toString()];
     }
     else if(val > high)
     {
-      return [1, "❌"];
+      return [1, value.toString()];
     }
     else
     {
       List gauge_valus=[];
       double percent= (val - low )/ high;
       gauge_valus.add(percent);
-      gauge_valus.add((percent * 100).toStringAsFixed(2));
+      gauge_valus.add(value.toString());
       return gauge_valus;
     }
   }

@@ -264,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       double percent = (temp - temp_low) / temp_high;
       gauge_valus.add(percent.toDouble());
-      gauge_valus.add((percent * 100).toStringAsFixed(1));
+      gauge_valus.add(temp.toString());
       print(gauge_valus.toString());
       return gauge_valus;
     }
